@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Load the properties file: Sport.Properties -->
+    <context:property-placeholder location="classpath:res/Sport.Properties" />
+
+    <!-- Inversion Of Control (IoC) -->
+    <bean id="myFortuneService"
+        class="com.nikhilSpringDemo.HappyFortuneService">
+    </bean>
+
+
+    <!-- Constructor Dependency Injection -->
+    <bean id="coach"
+          class="com.nikhilSpringDemo.TrackCoach">
+
+        <constructor-arg ref="myFortuneService"/>
+
+    </bean>
+
+
+    <!-- Set up Setter Dependency Injection -->
+    <bean id="myCricketCoach"
+        class="com.nikhilSpringDemo.CricketCoach">
+
+        <property name="fortuneService" ref="myFortuneService" />
+
+        <!-- Inject Literal values (Hard Coded) -->
+        <!-->
+
+        <property name="emailAddress" value="abcd@gmail.com" />
+        <property name="team" value="Sunrisers Hyderabad"/>
+
+        <-->
+
+        <!-- Read properties from Sport.Properties file instead of Hard Coding -->
+        <property name="emailAddress" value="${Email}" />
+        <property name="team" value="${Team}"/>
+
+
+    </bean>
+
+</beans>
